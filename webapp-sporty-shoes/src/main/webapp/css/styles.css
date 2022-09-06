@@ -1,0 +1,10 @@
+@charset "ISO-8859-1";
+
+.custom-navbar-bg{
+	background: #1de9b6 !important;
+}
+
+.main-content{
+	background: #000a12;
+	color: #ffffff;
+}
