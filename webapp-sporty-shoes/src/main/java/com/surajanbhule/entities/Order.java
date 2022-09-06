@@ -3,10 +3,15 @@ package com.surajanbhule.entities;
 import java.sql.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -17,7 +22,11 @@ public class Order {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long order_id;
 	private Date order_date;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="user_id")
 	private User user;
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinTable(name="order_product", joinColumns = @JoinColumn(name="order_id"),inverseJoinColumns = @JoinColumn(name="product_id"))
 	private List<Product> product_list;
 	private Double total_amount;
 	private String order_status;
