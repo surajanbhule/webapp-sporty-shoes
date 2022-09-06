@@ -22,11 +22,11 @@
 
 				<div class="card-body">
 					<form action="">
-						<input type="email" class="form-control" id="exampleInputEmail1"
-							aria-describedby="emailHelp"> 
-							<input type="email"
-							class="form-control mt-3" id="exampleInputEmail1"
-							aria-describedby="emailHelp"> 
+						<input type="text" class="form-control mt-2" id="usernameInput"
+							placeholder="Enter Your Username"> 
+							
+							<input type="password" class="form-control mt-3" id="passwordInput"
+							        placeholder="Enter Your Password"> 
 
 						<div class="container text-center mt-3">
 							<button class="btn btn-outline-success " type="submit">Login</button>

@@ -1,6 +1,7 @@
 package com.surajanbhule.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -19,5 +20,11 @@ public class MainContrpller {
 	@RequestMapping(path = "/register")
 	public String register() {
 		return "register";
+	}
+	
+	@PostMapping("/process-register")
+	public String processRegister() {
+		
+		return "login";
 	}
 }
