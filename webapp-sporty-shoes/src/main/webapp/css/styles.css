@@ -4,7 +4,16 @@
 	background: #1de9b6 !important;
 }
 
-.main-content{
+body{
 	background: #000a12;
 	color: #ffffff;
+}
+
+.form-head{
+	background: #1de9b6 !important;
+	color: #000a12 !important;
+}
+
+.form-border{
+	border-color: #1de9b6 !important;
 }

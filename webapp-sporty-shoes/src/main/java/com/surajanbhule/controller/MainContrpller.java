@@ -10,4 +10,14 @@ public class MainContrpller {
 	public String home() {
 		return "index";
 	}
+	
+	@RequestMapping(path = "/login")
+	public String login() {
+		return "login";
+	}
+	
+	@RequestMapping(path = "/register")
+	public String register() {
+		return "register";
+	}
 }
