@@ -18,11 +18,17 @@ public class Product {
 	private String category_name;
 	private Double product_price;
 	private int product_stock;
+	private byte[] image1;
+	private byte[] image2;
+	private byte[] image3;
+	private byte[] image4;
 	
 	public Product() {}
 
+	
+
 	public Product(long product_id, String product_name, String product_description, String category_name,
-			Double product_price, int product_stock) {
+			Double product_price, int product_stock, byte[] image1, byte[] image2, byte[] image3, byte[] image4) {
 		super();
 		this.product_id = product_id;
 		this.product_name = product_name;
@@ -30,7 +36,13 @@ public class Product {
 		this.category_name = category_name;
 		this.product_price = product_price;
 		this.product_stock = product_stock;
+		this.image1 = image1;
+		this.image2 = image2;
+		this.image3 = image3;
+		this.image4 = image4;
 	}
+
+
 
 	public long getProduct_id() {
 		return product_id;
@@ -78,6 +90,54 @@ public class Product {
 
 	public void setProduct_stock(int product_stock) {
 		this.product_stock = product_stock;
+	}
+
+
+
+	public byte[] getImage1() {
+		return image1;
+	}
+
+
+
+	public void setImage1(byte[] image1) {
+		this.image1 = image1;
+	}
+
+
+
+	public byte[] getImage2() {
+		return image2;
+	}
+
+
+
+	public void setImage2(byte[] image2) {
+		this.image2 = image2;
+	}
+
+
+
+	public byte[] getImage3() {
+		return image3;
+	}
+
+
+
+	public void setImage3(byte[] image3) {
+		this.image3 = image3;
+	}
+
+
+
+	public byte[] getImage4() {
+		return image4;
+	}
+
+
+
+	public void setImage4(byte[] image4) {
+		this.image4 = image4;
 	}
 	
 	

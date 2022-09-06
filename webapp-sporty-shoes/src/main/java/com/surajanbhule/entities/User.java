@@ -1,5 +1,6 @@
 package com.surajanbhule.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,7 +24,7 @@ public class User {
 	private String last_name;
 	private String user_email;
 	private String user_phone;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="address_id")
 	private Address address;
 	
