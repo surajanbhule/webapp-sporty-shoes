@@ -36,7 +36,7 @@
 							placeholder="Enter Your Last Name" name="last_name">
 
 						<input type="email" class="form-control mt-3" id="emailInput"
-						       placeholder="Enter Your Email" name="user_name">
+						       placeholder="Enter Your Email" name="user_email">
 
 						<input type="number"" class="form-control mt-3" id="emailInput"
 						       placeholder="Enter Your Phone" name="user_phone">
@@ -44,7 +44,7 @@
 						<input type="text" class="form-control mt-3" id="cityInput"
 							   placeholder="Enter Your City" name="address.city_name">
 							   
-						<input type="password" class="form-control mt-3" id="streetInput"
+						<input type="text" class="form-control mt-3" id="streetInput"
 						       placeholder="Enter Your Street Name" name="address.street_name">
 
 						<input type="text" class="form-control mt-3" id="landmarkInput"

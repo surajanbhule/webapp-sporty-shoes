@@ -1,9 +1,12 @@
 package com.surajanbhule.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -15,34 +18,37 @@ public class Product {
 	private long product_id;
 	private String product_name;
 	private String product_description;
-	private String category_name;
-	private Double product_price;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="category_id")
+	private Category category;
+	private Double product_original_price;
 	private int product_stock;
-	private byte[] image1;
-	private byte[] image2;
-	private byte[] image3;
-	private byte[] image4;
+	private Double product_discount;
+	private Double product_price;
+	private String image1;
+	private String image2;
+	private String image3;
+	private String image4;
 	
 	public Product() {}
 
-	
-
-	public Product(long product_id, String product_name, String product_description, String category_name,
-			Double product_price, int product_stock, byte[] image1, byte[] image2, byte[] image3, byte[] image4) {
+	public Product(long product_id, String product_name, String product_description, Category category,
+			 int product_stock, Double product_discount, Double product_price,
+			String image1, String image2, String image3, String image4) {
 		super();
 		this.product_id = product_id;
 		this.product_name = product_name;
 		this.product_description = product_description;
-		this.category_name = category_name;
-		this.product_price = product_price;
+		this.category = category;
 		this.product_stock = product_stock;
+		this.product_discount = product_discount;
+		this.product_price = product_price;
 		this.image1 = image1;
 		this.image2 = image2;
 		this.image3 = image3;
 		this.image4 = image4;
+		this.product_original_price = product_price*( product_discount/100);
 	}
-
-
 
 	public long getProduct_id() {
 		return product_id;
@@ -68,12 +74,30 @@ public class Product {
 		this.product_description = product_description;
 	}
 
-	public String getCategory_name() {
-		return category_name;
+	public Category getCategory() {
+		return category;
 	}
 
-	public void setCategory_name(String category_name) {
-		this.category_name = category_name;
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	
+
+	public int getProduct_stock() {
+		return product_stock;
+	}
+
+	public void setProduct_stock(int product_stock) {
+		this.product_stock = product_stock;
+	}
+
+	public Double getProduct_discount() {
+		return product_discount;
+	}
+
+	public void setProduct_discount(Double product_discount) {
+		this.product_discount = product_discount;
 	}
 
 	public Double getProduct_price() {
@@ -84,61 +108,46 @@ public class Product {
 		this.product_price = product_price;
 	}
 
-	public int getProduct_stock() {
-		return product_stock;
-	}
-
-	public void setProduct_stock(int product_stock) {
-		this.product_stock = product_stock;
-	}
-
-
-
-	public byte[] getImage1() {
+	public String getImage1() {
 		return image1;
 	}
 
-
-
-	public void setImage1(byte[] image1) {
+	public void setImage1(String image1) {
 		this.image1 = image1;
 	}
 
-
-
-	public byte[] getImage2() {
+	public String getImage2() {
 		return image2;
 	}
 
-
-
-	public void setImage2(byte[] image2) {
+	public void setImage2(String image2) {
 		this.image2 = image2;
 	}
 
-
-
-	public byte[] getImage3() {
+	public String getImage3() {
 		return image3;
 	}
 
-
-
-	public void setImage3(byte[] image3) {
+	public void setImage3(String image3) {
 		this.image3 = image3;
 	}
 
-
-
-	public byte[] getImage4() {
+	public String getImage4() {
 		return image4;
 	}
 
-
-
-	public void setImage4(byte[] image4) {
+	public void setImage4(String image4) {
 		this.image4 = image4;
 	}
+
+	public Double getProduct_original_price() {
+		return product_original_price;
+	}
+
+	
+	
+
+	
 	
 	
 }

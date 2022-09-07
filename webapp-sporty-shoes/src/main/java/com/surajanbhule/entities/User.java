@@ -24,14 +24,17 @@ public class User {
 	private String last_name;
 	private String user_email;
 	private String user_phone;
+	private String user_type;
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="address_id")
 	private Address address;
 	
 	public User() {}
 
+	
+
 	public User(long user_id, String username, String password, String first_name, String last_name, String user_email,
-			String user_phone, Address address) {
+			String user_phone, String user_type, Address address) {
 		super();
 		this.user_id = user_id;
 		this.username = username;
@@ -40,8 +43,11 @@ public class User {
 		this.last_name = last_name;
 		this.user_email = user_email;
 		this.user_phone = user_phone;
+		this.user_type = user_type;
 		this.address = address;
 	}
+
+
 
 	public long getUser_id() {
 		return user_id;
@@ -106,6 +112,19 @@ public class User {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
+
+	
+	public String getUser_type() {
+		return user_type;
+	}
+
+
+
+	public void setUser_type(String user_type) {
+		this.user_type = user_type;
+	}
+
+
 
 	@Override
 	public String toString() {
