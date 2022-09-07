@@ -17,3 +17,13 @@ body{
 .form-border{
 	border-color: #1de9b6 !important;
 }
+
+.admin .card{
+	border: 5px solid #1de9b6;
+}
+
+.admin .card:hover{
+	background: #1de9b6 !important;
+	cursor: pointer;
+}
+
