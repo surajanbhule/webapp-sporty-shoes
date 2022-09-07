@@ -23,7 +23,7 @@
 				</div>
 				
 				<div class="card-body">
-					<form action="">
+					<form action="/login-process" method="post">
 						<input type="text" class="form-control mt-2" id="usernameInput"
 							placeholder="Enter Your Username" name="username"> 
 							
