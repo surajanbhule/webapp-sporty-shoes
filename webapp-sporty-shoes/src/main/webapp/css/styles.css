@@ -30,3 +30,7 @@ body{
 	cursor: pointer;
 }
 
+.list-group-item.active{
+	background: #1de9b6 !important;
+	border-color: #1de9b6 !important;
+}

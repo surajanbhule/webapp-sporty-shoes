@@ -10,7 +10,7 @@ public class Category {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long category_id;
+	private long category_id;
 	private String category_name;
 	private String category_short_desc;
 	

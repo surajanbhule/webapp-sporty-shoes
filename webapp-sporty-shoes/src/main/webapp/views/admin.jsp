@@ -55,7 +55,7 @@ if (admin_user.getUser_type().equals("normal")) {
 						<img style="max-width: 125px" src="/img/users.png"
 							class="img-fluid" alt="...">
 						<h4 class="text-black">
-							USERS <span class="badge text-bg-warning mb-3">50</span>
+							USERS <span class="badge text-bg-warning mb-3">${users.size()}</span>
 						</h4>
 
 
@@ -80,7 +80,7 @@ if (admin_user.getUser_type().equals("normal")) {
 						<img style="max-width: 125px" src="/img/products.png"
 							class="img-fluid " alt="...">
 						<h4 class="text-black">
-							PRODUCTS <span class="badge text-bg-warning mb-3">500</span>
+							PRODUCTS <span class="badge text-bg-warning mb-3">${products.size()}</span>
 						</h4>
 
 
@@ -102,7 +102,7 @@ if (admin_user.getUser_type().equals("normal")) {
 						<img style="max-width: 125px" src="/img/categories.png"
 							class="img-fluid " alt="...">
 						<h4 class="text-black">
-							CATEGORIES <span class="badge text-bg-warning mb-3">20</span>
+							CATEGORIES <span class="badge text-bg-warning mb-3">${categories.size()}</span>
 						</h4>
 
 

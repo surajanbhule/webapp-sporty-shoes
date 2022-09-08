@@ -149,6 +149,15 @@ public class Product {
 		this.product_original_price = product_original_price;
 	}
 
+	@Override
+	public String toString() {
+		return "Product [product_id=" + product_id + ", product_name=" + product_name + ", product_description="
+				+ product_description + ", category=" + category + ", product_original_price=" + product_original_price
+				+ ", product_stock=" + product_stock + ", product_discount=" + product_discount + ", product_price="
+				+ product_price + ", image1=" + image1 + ", image2=" + image2 + ", image3=" + image3 + ", image4="
+				+ image4 + "]";
+	}
+
 	
 	
 

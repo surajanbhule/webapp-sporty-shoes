@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.surajanbhule.Helper;
 import com.surajanbhule.entities.Category;
 import com.surajanbhule.entities.Product;
 import com.surajanbhule.entities.User;
@@ -43,14 +44,52 @@ public class MainContrpller {
 	private ProductRepository productRepository;
 
 	@RequestMapping("/")
-	public String home(HttpServletRequest request) {
+	public String home(HttpServletRequest request,Model model) {
+		String catid=request.getParameter("catid");
+		
+		
+		
+		List<Category> categories= (List<Category>) categoryRepository.findAll();
+		List<User> users= (List<User>) userRepository.findAll();
+		Helper helper=new Helper();
+		model.addAttribute("helper", helper);
+		model.addAttribute("categories",categories);
+		model.addAttribute("users",users);
+		List<Product>products=null;
+		
+		
+		if(catid==null||catid.equals("all"))
+		{
+		
+			products= (List<Product>) productRepository.findAll();
+		    model.addAttribute("category_id", 0);
+		
+		}else {
+			
+			Optional<Category> catop = categoryRepository.findById(Long.parseLong(catid));
+			Category cat= catop.get();
+			products= (List<Product>) productRepository.findProductsByCategory(cat);
+			System.out.println(products);
+			request.setAttribute("cat", cat);
+			model.addAttribute("category_id", cat.getCategory_id());
+			
+			
+		}
+		model.addAttribute("active", "active");
+		model.addAttribute("dont_active", "");
+		 model.addAttribute("products",products);
 		return "index";
 	}
 
 	@RequestMapping(path = "/admin")
 	public String admin(HttpServletRequest request, Model model) {
 		List<Category> categories= (List<Category>) categoryRepository.findAll();
+		List<User> users= (List<User>) userRepository.findAll();
+		List<Product>products= (List<Product>) productRepository.findAll();
 		model.addAttribute("categories",categories);
+		model.addAttribute("users",users);
+		model.addAttribute("products",products);
+		System.out.println("users : "+users.size());
 		return "admin";
 	}
 	
