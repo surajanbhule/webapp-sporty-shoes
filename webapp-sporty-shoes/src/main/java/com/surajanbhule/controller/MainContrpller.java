@@ -1,23 +1,46 @@
 package com.surajanbhule.controller;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.util.List;
+import java.util.Optional;
+
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.surajanbhule.entities.Category;
+import com.surajanbhule.entities.Product;
 import com.surajanbhule.entities.User;
+import com.surajanbhule.repositories.CategoryRepository;
+import com.surajanbhule.repositories.ProductRepository;
 import com.surajanbhule.repositories.UserRepository;
 
 @Controller
+@MultipartConfig
 public class MainContrpller {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private CategoryRepository categoryRepository;
+	
+	@Autowired
+	private ProductRepository productRepository;
 
 	@RequestMapping("/")
 	public String home(HttpServletRequest request) {
@@ -25,8 +48,139 @@ public class MainContrpller {
 	}
 
 	@RequestMapping(path = "/admin")
-	public String admin(HttpServletRequest request) {
+	public String admin(HttpServletRequest request, Model model) {
+		List<Category> categories= (List<Category>) categoryRepository.findAll();
+		model.addAttribute("categories",categories);
 		return "admin";
+	}
+	
+	@RequestMapping(path = "/addCategory")
+	public String addCategory(@ModelAttribute Category category,HttpServletRequest request) {
+		HttpSession session=request.getSession();
+		
+		try {
+			Category savedCat = categoryRepository.save(category);
+			
+			if(savedCat!=null) {
+				session.setAttribute("messege", "Category Added Successfully.");
+				session.setAttribute("msg_type", "success");
+			}else {
+				
+				session.setAttribute("messege", "Something went wrong, try again");
+				session.setAttribute("msg_type", "danger");
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		
+		
+		
+		return "redirect:/admin";
+	}
+	
+	
+	@RequestMapping(path = "/addProduct")
+	
+	public String addProduct(HttpServletRequest request,
+			                 @Param("category")String category,
+			                 @Param("image1")MultipartFile image1,
+			                 @Param("image2")MultipartFile image2,
+			                 @Param("image3")MultipartFile image3,
+			                 @Param("image4")MultipartFile image4,
+			                 @Param("product_name")String product_name,
+			                 @Param("product_description")String product_description,
+			                 @Param("product_stock") int product_stock,
+			                 @Param(" product_discount")double product_discount,
+			                 @Param("product_price")double product_price
+			                 ) throws Exception
+	{
+		System.out.println("Category Output "+category);
+		System.out.println("Image1"+image1.getName());
+		HttpSession session=request.getSession();
+		
+		Optional<Category> findCategoryById = categoryRepository.findById(Long.parseLong(category));
+		Category categoryOb=findCategoryById.get();
+		
+		Product product = new Product();
+		product.setCategory(categoryOb);
+		product.setImage1(product_name+"_"+image1.getOriginalFilename());
+		product.setImage2(product_name+"_"+image2.getOriginalFilename());
+		product.setImage3(product_name+"_"+image3.getOriginalFilename());
+		product.setImage4(product_name+"_"+image4.getOriginalFilename());
+		product.setProduct_name(product_name);
+		product.setProduct_description(product_description);
+		product.setProduct_stock(product_stock);
+		product.setProduct_discount(product_discount);
+		product.setProduct_price(product_price);
+		double product_original_price=   product_price - (product_price * (product_discount/100));
+		product.setProduct_original_price(product_original_price);
+		
+		//Images Uploading
+		String rpath1=request.getRealPath("img")+File.separator+"products"+File.separator+product_name+"_"+image1.getOriginalFilename();
+		String rpath2=request.getRealPath("img")+File.separator+"products"+File.separator+product_name+"_"+image2.getOriginalFilename();
+		String rpath3=request.getRealPath("img")+File.separator+"products"+File.separator+product_name+"_"+image3.getOriginalFilename();
+		String rpath4=request.getRealPath("img")+File.separator+"products"+File.separator+product_name+"_"+image4.getOriginalFilename();
+		System.out.println("R Path: "+rpath1);
+		
+		FileOutputStream fos1=new FileOutputStream(rpath1);
+		FileOutputStream fos2=new FileOutputStream(rpath2);
+		FileOutputStream fos3=new FileOutputStream(rpath3);
+		FileOutputStream fos4=new FileOutputStream(rpath4);
+		
+		InputStream is1= image1.getInputStream();
+		InputStream is2= image2.getInputStream();
+		InputStream is3= image3.getInputStream();
+		InputStream is4= image4.getInputStream();
+		
+		byte[] data1= new byte[is1.available()];
+		byte[] data2= new byte[is2.available()];
+		byte[] data3= new byte[is3.available()];
+		byte[] data4= new byte[is4.available()];
+		
+		is1.read(data1);
+		is2.read(data2);
+		is3.read(data3);
+		is4.read(data4);
+		
+		fos1.write(data1);
+		fos2.write(data2);
+		fos3.write(data3);
+		fos4.write(data4);
+		
+		fos1.close();
+		fos2.close();
+		fos3.close();
+		fos4.close();
+		
+		is1.close();
+		is2.close();
+		is3.close();
+		is4.close();
+		
+		try {
+			
+			
+			
+			Product savedProduct = productRepository.save(product);
+			
+			if(savedProduct!=null) {
+				session.setAttribute("messege", "Product added successfully");
+				session.setAttribute("msg_type", "success");
+			}else {
+			session.setAttribute("messege", "Something went wrong");
+				session.setAttribute("msg_type", "danger");
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		
+		
+		
+		return "redirect:/admin";
 	}
 	
 	@RequestMapping(path = "/login")

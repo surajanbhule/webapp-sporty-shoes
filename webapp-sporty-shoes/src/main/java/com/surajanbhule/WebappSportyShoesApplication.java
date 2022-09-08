@@ -12,6 +12,7 @@ public class WebappSportyShoesApplication {
 
 	public static void main(String[] args) {
 		 ApplicationContext context = SpringApplication.run(WebappSportyShoesApplication.class, args);
+		 
 		
 	}
 

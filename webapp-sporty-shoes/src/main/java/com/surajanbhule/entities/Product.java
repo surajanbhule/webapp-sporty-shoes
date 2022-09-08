@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -18,7 +19,7 @@ public class Product {
 	private long product_id;
 	private String product_name;
 	private String product_description;
-	@OneToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="category_id")
 	private Category category;
 	private Double product_original_price;
@@ -125,7 +126,7 @@ public class Product {
 	}
 
 	public String getImage3() {
-		return image3;
+		return image3; 
 	}
 
 	public void setImage3(String image3) {
@@ -142,6 +143,10 @@ public class Product {
 
 	public Double getProduct_original_price() {
 		return product_original_price;
+	}
+
+	public void setProduct_original_price(Double product_original_price) {
+		this.product_original_price = product_original_price;
 	}
 
 	
