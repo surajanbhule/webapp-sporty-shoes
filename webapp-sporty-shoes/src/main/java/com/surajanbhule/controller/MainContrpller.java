@@ -169,13 +169,14 @@ public class MainContrpller {
 		Product product=productOp.get();
 		
 		Cart cart= user.getCart();
-		cart.getCart_products_list().add(product);
-		
+		List<Product> cart_products_list = cart.getCart_products_list();
+		cart_products_list.add(product);
 		try {
-			
+			cart.setCart_products_list(cart_products_list);
 			cartRepository.save(cart);
-			product.setInCart("yes");
 			productRepository.save(product);
+			
+			
 		} catch (Exception e) {
 			
 			e.printStackTrace();
@@ -353,11 +354,16 @@ public class MainContrpller {
 		try {
 			HttpSession session = request.getSession();
 			user.setUser_type("normal");
+			Cart cart=new Cart();
+			
+			user.setCart(cart);
+			
 			User save = userRepository.save(user);
 
 			if (save.getUser_id() > 0) {
 				session.setAttribute("messege",
-						"Registration successfull, username: " + save.getUsername() + " You can login.");
+						"Registration successfull, username: " + save.getUsername() + " You can login. Cart Id "+save.getCart().getCart_id()
+						);
 				session.setAttribute("msg_type","success");
 			} else {
 				session.setAttribute("messege", "Something went wrong");
