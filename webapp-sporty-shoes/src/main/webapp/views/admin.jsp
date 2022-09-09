@@ -322,7 +322,7 @@ if (admin_user.getUser_type().equals("normal")) {
 				<input type="text" style="width:400px" class="form-control form-control-sm mb-2" id="myUserInput" name="myInput" placeholder="Search Here">
 				
                     
-					<table class="table">
+					<table class="table table-hover table-striped">
 						<thead>
 							<tr>
 								<th scope="col">ID</th>
@@ -378,7 +378,7 @@ if (admin_user.getUser_type().equals("normal")) {
 				</div>
 				<div class="modal-body">
 				<input type="text" style="width:400px" class="form-control form-control-sm mb-2" id="myProductInput" name="myInput" placeholder="Search Here">
-				<table class="table">
+				<table class="table table-hover table-striped">
 						<thead>
 							<tr>
 								<th scope="col">ID</th>
@@ -436,7 +436,7 @@ if (admin_user.getUser_type().equals("normal")) {
 				</div>
 				<div class="modal-body">
 				
-				<table class="table">
+				<table class="table table-hover table-striped">
 						<thead>
 							<tr>
 								<th scope="col">ID</th>
@@ -471,6 +471,8 @@ if (admin_user.getUser_type().equals("normal")) {
 		</div>
 	</div>
 	<!-- End Category List Model -->
+	
+	
 	<script type="text/javascript">
               $(document).ready(function(){
 			         $('#myUserInput').on("keyup", function(){

@@ -50,12 +50,12 @@
 				<div class="list-group">
 
 					<a href="/?catid=all"
-						class="list-group-item list-group-item-action ${category_id==0? active :dont_active}"
+						class="list-group-item list-group-item-action categories ${category_id==0? active :dont_active}"
 						aria-current="true">All Products </a>
 					<c:forEach items="${categories}" var="category">
 
 						<a href="/?catid=${category.getCategory_id()}"
-							class="list-group-item list-group-item-action ${category_id==category.getCategory_id()? active :dont_active}"
+							class="list-group-item list-group-item-action mt-1 categories ${category_id==category.getCategory_id()? active :dont_active}"
 							aria-current="true">${category.getCategory_name() } </a>
 					</c:forEach>
 
@@ -81,9 +81,41 @@
 									<div class="card">
 
 										<div class="container text-center">
-											<a href="/"> <img style="max-height: 250px"
+											<a href="/">
+
+												<div id="productCarousel" class="carousel slide"
+													data-bs-ride="carousel">
+													<div class="carousel-inner">
+														<div class="carousel-item active" data-bs-interval="1000">
+															<img style="max-height: 250px"
 												src="/img/products/${product.getImage1()}"
 												class="card-img-top" alt="...">
+														</div>
+														<div class="carousel-item" data-bs-interval="2000">
+															<img style="max-height: 250px"
+												src="/img/products/${product.getImage1()}"
+												class="card-img-top" alt="...">
+														</div>
+														<div class="carousel-item">
+															<img style="max-height: 250px"
+												src="/img/products/${product.getImage1()}"
+												class="card-img-top" alt="...">
+														</div>
+													</div>
+													<button class="carousel-control-prev" type="button"
+														data-bs-target="#productCarousel"
+														data-bs-slide="prev">
+														<span class="carousel-control-prev-icon"
+															aria-hidden="true"></span> <span class="visually-hidden">Previous</span>
+													</button>
+													<button class="carousel-control-next" type="button"
+														data-bs-target="#productCarousel"
+														data-bs-slide="next">
+														<span class="carousel-control-next-icon"
+															aria-hidden="true"></span> <span class="visually-hidden">Next</span>
+													</button>
+												</div> 
+												
 											</a>
 										</div>
 
@@ -183,7 +215,7 @@
 			<div class="modal-footer">
 			
 					<button type="button" class="btn btn-success"
-						data-bs-dismiss="modal">Place Order</button>
+						data-bs-toggle="modal" data-bs-target="#checkoutModal">Place Order</button>
 			         
 					<button type="button" class="btn btn-danger"
 						data-bs-dismiss="modal">Close</button>
@@ -192,5 +224,34 @@
 		</div>
 	</div>
 <!-- Cart Model End  -->
+
+<!-- Checkout Model Start -->
+<!-- Modal -->
+	<div class="modal form-border" id="checkoutModal" tabindex="-1"
+		aria-hidden="true">
+		<div class="modal-dialog modal-xl">
+			<div class="modal-content">
+				<div class="modal-header form-head">
+
+					<div class="container text-center">
+						<h5 class="modal-title text-black">Order Status</h5>
+					</div>
+
+
+				</div>
+				<div class="modal-body">
+                   
+					<h1 class="text-success">Your Order Is Placed Successfully, You Will Received It Shortly</h1>
+
+				</div>
+			<div class="modal-footer">
+
+					<button type="button" class="btn btn-danger"
+						data-bs-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- Checkout Model End -->
 </body>
 </html>

@@ -34,3 +34,8 @@ body{
 	background: #1de9b6 !important;
 	border-color: #1de9b6 !important;
 }
+
+.categories:hover{
+	background: #69f0ae !important;
+	border-color: #69f0ae !important;
+}

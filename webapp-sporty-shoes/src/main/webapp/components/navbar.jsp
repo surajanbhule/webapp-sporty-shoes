@@ -46,7 +46,7 @@ else{
 					<sup class="fs-6 text-black fw-bold"><%= noOfItems==0? "" :noOfItems %></sup></i></a></li>
 						 
 				<li class="nav-item"><a class="nav-link active"
-					aria-current="page" href="/logout"><i class="fa-sharp fa-solid fa-user text-primary "></i><%= "  "+user.getFirst_name() %></a></li>
+					aria-current="page" href=""><i class="fa-sharp fa-solid fa-user text-primary "></i><%= "  "+user.getFirst_name() %></a></li>
 						 
 				<li class="nav-item"><a class="nav-link active"
 					aria-current="page" href="/logout"><i class="fa-solid fa-right-from-bracket text-primary"></i>Logout</a></li>
