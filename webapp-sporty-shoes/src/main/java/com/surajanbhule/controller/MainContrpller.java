@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,11 +53,15 @@ public class MainContrpller {
 	public String home(HttpServletRequest request,Model model) {
 		String catid=request.getParameter("catid");
 		
+		HttpSession session=request.getSession();
+		User user=(User) request.getAttribute("current-user");
 		
-		
+	
 		List<Category> categories= (List<Category>) categoryRepository.findAll();
 		List<User> users= (List<User>) userRepository.findAll();
+		List<Cart> cart_list=(List<Cart>) cartRepository.findAll();
 		Helper helper=new Helper();
+	
 		model.addAttribute("helper", helper);
 		model.addAttribute("categories",categories);
 		model.addAttribute("users",users);

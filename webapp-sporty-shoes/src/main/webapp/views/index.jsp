@@ -1,4 +1,8 @@
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.surajanbhule.entities.Product"%>
+<%@page import="java.util.List"%>
+<%@page import="com.surajanbhule.entities.User"%>
 <%@page import="com.surajanbhule.entities.Category"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -108,18 +112,32 @@
 
 				</div>
 				<div class="modal-body">
-
+                   <%
+                    User user2=(User) session.getAttribute("current-user");
+                   List<Product>list_products=null;
+                   if(user2==null){
+                	   list_products =new ArrayList<>();
+                   }
+                   else{
+                	 list_products = user2.getCart().getCart_products_list();
+                   }
+                   
+                   double totalamount=0;
+                   for(Product p:list_products)
+                	   totalamount+=p.getProduct_original_price();
+                   %>
 					<ul class="list-group">
+					<c:forEach items="<%=list_products%>" var="cp">
 						<li class="list-group-item">
 						
 						<div class="row">
 						
 						<div class="col-md-4">
-							<span>Product Name</span>
+							<span>${cp.getProduct_name()}</span>
 						</div>
 						
 						<div class="col-md-4">
-						    <span class="ms-3">Product Price</span>
+						    <span class="ms-3">${cp.getProduct_original_price()}</span>
 						</div>
 						
 						<div class="col-md-4">
@@ -128,11 +146,11 @@
 						
 						</div>
 						</li>
-						
+						</c:forEach>
 						<li class="list-group-item mt-4">
-						<span>Total Amount: </span>
+						<span><b class="me-1">Total Amount:</b>   <b class="text-green">&#8377 <%= Math.round(totalamount)  %></b> </span>
 						</li>
-						
+					
 					</ul>
 
 				</div>

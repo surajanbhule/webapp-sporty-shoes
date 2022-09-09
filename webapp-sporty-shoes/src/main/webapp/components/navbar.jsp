@@ -2,6 +2,13 @@
 <%@page import="com.surajanbhule.entities.User"%>
 <%
 User user = (User) session.getAttribute("current-user");
+int noOfItems=0;
+if(user==null){
+	noOfItems=0;
+}
+else{
+	noOfItems=user.getCart().getCart_products_list().size();
+}
 %>
 
 <nav class="navbar navbar-expand-lg bg-light custom-navbar-bg">
@@ -30,12 +37,12 @@ User user = (User) session.getAttribute("current-user");
 			<%
 			} else {
 			%>
-
+            
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item"><a class="nav-link active"
 					aria-current="page" href="/logout">Logout</a></li>
                 <li class="nav-item" ><a class="nav-link active" data-bs-toggle="modal" data-bs-target="#cartModal"
-					aria-current="page" href="">Cart</a></li>
+					aria-current="page" href="">Cart(<%= noOfItems %>)</a></li>
 			</ul>
 
 			<%
