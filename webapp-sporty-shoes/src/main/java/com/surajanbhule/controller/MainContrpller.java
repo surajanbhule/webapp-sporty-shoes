@@ -83,13 +83,19 @@ public class MainContrpller {
 
 	@RequestMapping(path = "/admin")
 	public String admin(HttpServletRequest request, Model model) {
+		
+		
+		Helper helper= new Helper();
+		
 		List<Category> categories= (List<Category>) categoryRepository.findAll();
 		List<User> users= (List<User>) userRepository.findAll();
 		List<Product>products= (List<Product>) productRepository.findAll();
+		model.addAttribute("helper", helper);
 		model.addAttribute("categories",categories);
 		model.addAttribute("users",users);
 		model.addAttribute("products",products);
-		System.out.println("users : "+users.size());
+		
+		
 		return "admin";
 	}
 	

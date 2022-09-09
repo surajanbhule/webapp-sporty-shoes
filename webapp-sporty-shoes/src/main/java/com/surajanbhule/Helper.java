@@ -6,6 +6,6 @@ public class Helper {
 		if(s.length()<40)
 			return s;
 		else
-			return s.substring(0,40);
+			return s.substring(0,20);
 	}
 }
