@@ -1,4 +1,5 @@
 
+<%@page import="com.surajanbhule.Helper"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.surajanbhule.entities.Product"%>
 <%@page import="java.util.List"%>
@@ -8,7 +9,20 @@
 	pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page isELIgnored="false"%>
-
+<%
+                    User user2=(User) session.getAttribute("current-user");
+                   List<Product>list_products=null;
+                   if(user2==null){
+                	   list_products =new ArrayList<>();
+                   }
+                   else{
+                	 list_products = user2.getCart().getCart_products_list();
+                   }
+                   
+                   double totalamount=0;
+                   for(Product p:list_products)
+                	   totalamount+=p.getProduct_original_price();
+                   %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -81,7 +95,10 @@
 													class="badge rounded-pill text-bg-success ms-1">
 													${product.getProduct_discount() }%</span>
 													
-												<a href="/addToCart?product_id=${product.getProduct_id()}"><button type="button" class="btn btn-sm btn-primary ">Add To Cart</button></a>
+												<a href="/addToCart?product_id=${product.getProduct_id()}" class="btn btn-primary  ${product.getInCart().equals("yes")? "disabled" : ""}" >
+												
+												${product.getInCart().equals("yes")? "Already In Cart" : "Add To Cart"}
+												</a>
 													
 
 											</div>
@@ -112,20 +129,7 @@
 
 				</div>
 				<div class="modal-body">
-                   <%
-                    User user2=(User) session.getAttribute("current-user");
-                   List<Product>list_products=null;
-                   if(user2==null){
-                	   list_products =new ArrayList<>();
-                   }
-                   else{
-                	 list_products = user2.getCart().getCart_products_list();
-                   }
                    
-                   double totalamount=0;
-                   for(Product p:list_products)
-                	   totalamount+=p.getProduct_original_price();
-                   %>
 					<ul class="list-group">
 					<c:forEach items="<%=list_products%>" var="cp">
 						<li class="list-group-item">
@@ -148,7 +152,7 @@
 						</li>
 						</c:forEach>
 						<li class="list-group-item mt-4">
-						<span><b class="me-1">Total Amount:</b>   <b class="text-green">&#8377 <%= Math.round(totalamount)  %></b> </span>
+						<span>Total Amount:   <b class="ms-1">&#8377 <%= Math.round(totalamount)  %></b> </span>
 						</li>
 					
 					</ul>

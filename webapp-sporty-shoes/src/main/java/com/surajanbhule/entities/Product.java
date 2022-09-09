@@ -30,17 +30,20 @@ public class Product {
 	private String image2;
 	private String image3;
 	private String image4;
+	private String inCart;
 	
 	public Product() {}
 
+
 	public Product(long product_id, String product_name, String product_description, Category category,
-			 int product_stock, Double product_discount, Double product_price,
-			String image1, String image2, String image3, String image4) {
+			Double product_original_price, int product_stock, Double product_discount, Double product_price,
+			String image1, String image2, String image3, String image4, String inCart) {
 		super();
 		this.product_id = product_id;
 		this.product_name = product_name;
 		this.product_description = product_description;
 		this.category = category;
+		this.product_original_price = product_original_price;
 		this.product_stock = product_stock;
 		this.product_discount = product_discount;
 		this.product_price = product_price;
@@ -48,8 +51,9 @@ public class Product {
 		this.image2 = image2;
 		this.image3 = image3;
 		this.image4 = image4;
-		this.product_original_price = product_price*( product_discount/100);
+		this.inCart = inCart;
 	}
+
 
 	public long getProduct_id() {
 		return product_id;
@@ -149,6 +153,17 @@ public class Product {
 		this.product_original_price = product_original_price;
 	}
 
+
+	public String getInCart() {
+		return inCart;
+	}
+
+
+	public void setInCart(String inCart) {
+		this.inCart = inCart;
+	}
+
+
 	@Override
 	public String toString() {
 		return "Product [product_id=" + product_id + ", product_name=" + product_name + ", product_description="
@@ -157,11 +172,5 @@ public class Product {
 				+ product_price + ", image1=" + image1 + ", image2=" + image2 + ", image3=" + image3 + ", image4="
 				+ image4 + "]";
 	}
-
-	
-	
-
-	
-	
 	
 }

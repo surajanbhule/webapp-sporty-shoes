@@ -3,6 +3,7 @@ package com.surajanbhule.entities;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -20,7 +21,8 @@ public class Cart {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long cart_id;
 	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-	@JoinTable(name="cart_products",joinColumns = @JoinColumn(name="cart_id"),inverseJoinColumns = @JoinColumn(name="product_id"))
+	@JoinTable(name="cart_products",joinColumns = @JoinColumn(name="cart_id"),inverseJoinColumns = @JoinColumn(name="product_id",unique = false))
+	
 	private List<Product> cart_products_list;
 	private double total_amount;
 	

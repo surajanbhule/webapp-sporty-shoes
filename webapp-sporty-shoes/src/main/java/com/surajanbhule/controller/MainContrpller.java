@@ -163,7 +163,49 @@ public class MainContrpller {
 		try {
 			
 			cartRepository.save(cart);
+			product.setInCart("yes");
+			productRepository.save(product);
+		} catch (Exception e) {
 			
+			e.printStackTrace();
+			
+		}
+		
+		
+		
+		return "redirect:/";
+	 }
+	}
+	
+	
+	@RequestMapping(path = "/deleteFromCart")
+	public String deleteFromCart(HttpServletRequest request) {
+		HttpSession session=request.getSession();
+		long product_id= Long.parseLong(request.getParameter("product_id"));
+		User user= (User)session.getAttribute("current-user"); 
+		
+		
+		if(user==null) {
+			session.setAttribute("messege", "Login First To Add To Cart");
+			session.setAttribute("msg_type", "danger");
+			return "redirect:/login";
+		}
+		else {
+			
+		System.out.println("Product Id: "+ product_id);
+		System.out.println("User"+user.getFirst_name());
+		
+		Optional<Product> productOp = productRepository.findById(product_id);
+		Product product=productOp.get();
+		
+		Cart cart= user.getCart();
+		cart.getCart_products_list().add(product);
+		
+		try {
+			
+			cartRepository.save(cart);
+			product.setInCart("yes");
+			productRepository.save(product);
 		} catch (Exception e) {
 			
 			e.printStackTrace();
