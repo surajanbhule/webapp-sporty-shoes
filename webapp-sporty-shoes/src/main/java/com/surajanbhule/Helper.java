@@ -13,18 +13,15 @@ public class Helper {
 			return s.substring(0,20);
 	}
 	
-	public String isProductAdded(List<Product> products,long cart_product_id) {
-		if(products==null) {
-			System.out.println("List is null");
-			return "";
-		}
-		for(Product p:products) {
-			if(cart_product_id==p.getProduct_id()) 
-				System.out.println("inside it: "+cart_product_id);
-				return "disabled";
+	public boolean inCart(List<Product> pList,Product product) {
+		System.out.println("Inside in cart");
+		for(Product p:pList) {
+			
+			if(p.getProduct_id()==product.getProduct_id()) {
+				return true;
+			}
 		}
 		
-		return "";	
-		
+		return false;
 	}
 }

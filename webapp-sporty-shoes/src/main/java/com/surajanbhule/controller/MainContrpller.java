@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,14 +55,24 @@ public class MainContrpller {
 		String catid=request.getParameter("catid");
 		
 		HttpSession session=request.getSession();
-		User user=(User) request.getAttribute("current-user");
-		
+		User user=(User) session.getAttribute("current-user");
+		List<Product>cart_products_list=null;
+		if(user==null) {
+			cart_products_list =new ArrayList<>();
+			System.out.println("No User");
+		}
+		else {
+			cart_products_list  = user.getCart().getCart_products_list();
+			for(Product p:cart_products_list)
+				System.out.println(p.getProduct_name());
+			System.out.println(user.getFirst_name());
+		}
 	
 		List<Category> categories= (List<Category>) categoryRepository.findAll();
 		List<User> users= (List<User>) userRepository.findAll();
 		List<Cart> cart_list=(List<Cart>) cartRepository.findAll();
 		Helper helper=new Helper();
-	
+	    model.addAttribute("cart_products_list", cart_products_list);
 		model.addAttribute("helper", helper);
 		model.addAttribute("categories",categories);
 		model.addAttribute("users",users);
@@ -185,37 +196,35 @@ public class MainContrpller {
 		User user= (User)session.getAttribute("current-user"); 
 		
 		
-		if(user==null) {
-			session.setAttribute("messege", "Login First To Add To Cart");
-			session.setAttribute("msg_type", "danger");
-			return "redirect:/login";
-		}
-		else {
-			
-		System.out.println("Product Id: "+ product_id);
-		System.out.println("User"+user.getFirst_name());
-		
-		Optional<Product> productOp = productRepository.findById(product_id);
-		Product product=productOp.get();
-		
-		Cart cart= user.getCart();
-		cart.getCart_products_list().add(product);
-		
 		try {
+			System.out.println("Try to deleting product from cart");
+			 Optional<Product> pO = productRepository.findById(product_id);
+			 Product product=pO.get();
+			 System.out.println("Product Name "+product.getProduct_name());
+			Cart cart= user.getCart();
+			List<Product> cart_products_list = cart.getCart_products_list();
+			
+			for(Product p:cart_products_list) {
+				if(p.getProduct_id()==product_id)
+				{
+					boolean r = cart_products_list.remove(p);
+					System.out.println("item removed successfully");
+				}
+			}
+			
+			
+			
+			cart.setCart_products_list(cart_products_list);
 			
 			cartRepository.save(cart);
-			product.setInCart("yes");
 			productRepository.save(product);
-		} catch (Exception e) {
-			
+		} 
+		catch (Exception e) 
+		{
 			e.printStackTrace();
-			
 		}
 		
-		
-		
 		return "redirect:/";
-	}
 	}
 	
 	

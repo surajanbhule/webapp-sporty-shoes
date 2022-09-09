@@ -9,20 +9,27 @@
 	pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page isELIgnored="false"%>
+
 <%
                     User user2=(User) session.getAttribute("current-user");
                    List<Product>list_products=null;
+                   
                    if(user2==null){
+                	   
                 	   list_products =new ArrayList<>();
+                	   
                    }
                    else{
-                	 list_products = user2.getCart().getCart_products_list();
+                	   
+                	   list_products = user2.getCart().getCart_products_list();
                    }
                    
                    double totalamount=0;
                    for(Product p:list_products)
                 	   totalamount+=p.getProduct_original_price();
                    %>
+                   
+                 
 <!DOCTYPE html>
 <html>
 <head>
@@ -95,11 +102,13 @@
 													class="badge rounded-pill text-bg-success ms-1">
 													${product.getProduct_discount() }%</span>
 													
-												<a href="/addToCart?product_id=${product.getProduct_id()}" class="btn btn-primary  ${product.getInCart().equals("yes")? "disabled" : ""}" >
-												
-												${product.getInCart().equals("yes")? "Already In Cart" : "Add To Cart"}
+												<a href="/addToCart?product_id=${product.getProduct_id()}" class=" btn btn-primary ${
+												  helper.inCart(cart_products_list,product)? "disabled" : ""
+												  } " >
+												 ${
+												  helper.inCart(cart_products_list,product) ? "Already In Cart" :"Add To Cart"
+												  }
 												</a>
-													
 
 											</div>
 										</div>
@@ -114,6 +123,7 @@
 		</div>
 	</div>
 
+<!-- Cart Model Start  -->
 
 <!-- Modal -->
 	<div class="modal form-border" id="cartModal" tabindex="-1"
@@ -145,7 +155,7 @@
 						</div>
 						
 						<div class="col-md-4">
-							<button type="button" class="btn btn-danger fixed-end">Delete</button>
+							<a href="/deleteFromCart?product_id=${cp.getProduct_id()}" class="btn btn-danger">Delete</a>
 						</div>
 						
 						</div>
@@ -169,6 +179,6 @@
 			</div>
 		</div>
 	</div>
-
+<!-- Cart Model End  -->
 </body>
 </html>
