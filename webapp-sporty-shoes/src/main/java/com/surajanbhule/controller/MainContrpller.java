@@ -23,9 +23,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.surajanbhule.Helper;
+import com.surajanbhule.entities.Cart;
 import com.surajanbhule.entities.Category;
 import com.surajanbhule.entities.Product;
 import com.surajanbhule.entities.User;
+import com.surajanbhule.repositories.CartRepository;
 import com.surajanbhule.repositories.CategoryRepository;
 import com.surajanbhule.repositories.ProductRepository;
 import com.surajanbhule.repositories.UserRepository;
@@ -42,6 +44,9 @@ public class MainContrpller {
 	
 	@Autowired
 	private ProductRepository productRepository;
+	
+	@Autowired
+	private CartRepository cartRepository;
 
 	@RequestMapping("/")
 	public String home(HttpServletRequest request,Model model) {
@@ -123,6 +128,47 @@ public class MainContrpller {
 		
 		
 		return "redirect:/admin";
+	}
+	
+	
+	
+	@RequestMapping(path = "/addToCart")
+	public String addToCart(HttpServletRequest request) {
+		HttpSession session=request.getSession();
+		long product_id= Long.parseLong(request.getParameter("product_id"));
+		User user= (User)session.getAttribute("current-user"); 
+		
+		
+		if(user==null) {
+			session.setAttribute("messege", "Login First To Add To Cart");
+			session.setAttribute("msg_type", "danger");
+			return "redirect:/login";
+		}
+		else {
+			
+		System.out.println("Product Id: "+ product_id);
+		System.out.println("User"+user.getFirst_name());
+		
+		Optional<Product> productOp = productRepository.findById(product_id);
+		Product product=productOp.get();
+		
+		Cart cart= user.getCart();
+		cart.getCart_products_list().add(product);
+		
+		try {
+			
+			cartRepository.save(cart);
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			
+		}
+		
+		
+		
+		return "redirect:/";
+	}
 	}
 	
 	

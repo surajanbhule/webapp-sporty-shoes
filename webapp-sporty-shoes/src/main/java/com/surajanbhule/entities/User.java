@@ -28,13 +28,20 @@ public class User {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="address_id")
 	private Address address;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="cart_id")
+	private Cart cart;
 	
 	public User() {}
 
 	
 
+	
+
+
+
 	public User(long user_id, String username, String password, String first_name, String last_name, String user_email,
-			String user_phone, String user_type, Address address) {
+			String user_phone, String user_type, Address address, Cart cart) {
 		super();
 		this.user_id = user_id;
 		this.username = username;
@@ -45,7 +52,12 @@ public class User {
 		this.user_phone = user_phone;
 		this.user_type = user_type;
 		this.address = address;
+		this.cart = cart;
 	}
+
+
+
+
 
 
 
@@ -123,6 +135,26 @@ public class User {
 	public void setUser_type(String user_type) {
 		this.user_type = user_type;
 	}
+
+
+
+	public Cart getCart() {
+		return cart;
+	}
+
+
+
+
+
+
+
+	public void setCart(Cart cart) {
+		this.cart = cart;
+	}
+
+
+
+
 
 
 

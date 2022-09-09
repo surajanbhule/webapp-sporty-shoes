@@ -34,7 +34,8 @@ User user = (User) session.getAttribute("current-user");
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item"><a class="nav-link active"
 					aria-current="page" href="/logout">Logout</a></li>
-
+                <li class="nav-item" ><a class="nav-link active" data-bs-toggle="modal" data-bs-target="#cartModal"
+					aria-current="page" href="">Cart</a></li>
 			</ul>
 
 			<%
