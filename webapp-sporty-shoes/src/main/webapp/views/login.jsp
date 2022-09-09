@@ -25,7 +25,7 @@
 				<div class="card-body">
 					<form action="/login-process" method="post">
 						<input type="text" class="form-control mt-2" id="usernameInput"
-							placeholder="Enter Your Username" name="username"> 
+							placeholder="Enter Your Username" name="username">
 							
 							<input type="password" class="form-control mt-3" id="passwordInput"
 							        placeholder="Enter Your Password" name="password"> 

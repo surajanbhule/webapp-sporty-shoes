@@ -128,7 +128,7 @@
 <!-- Modal -->
 	<div class="modal form-border" id="cartModal" tabindex="-1"
 		aria-hidden="true">
-		<div class="modal-dialog">
+		<div class="modal-dialog modal-xl">
 			<div class="modal-content">
 				<div class="modal-header form-head">
 
@@ -146,16 +146,28 @@
 						
 						<div class="row">
 						
-						<div class="col-md-4">
+						<div class="col-md-2">
 							<span>${cp.getProduct_name()}</span>
 						</div>
 						
-						<div class="col-md-4">
-						    <span class="ms-3">${cp.getProduct_original_price()}</span>
+						<div class="col-md-2">
+						    <span class="ms-3">&#8377 ${cp.getProduct_original_price()}</span>
 						</div>
 						
-						<div class="col-md-4">
-							<a href="/deleteFromCart?product_id=${cp.getProduct_id()}" class="btn btn-danger">Delete</a>
+						<div class="col-md-2">
+							<span><s>&#8377 ${cp.getProduct_price()}</s></span>
+						</div>
+						
+						<div class="col-md-2">
+							<span class="badge text-bg-danger"> ${cp.getProduct_discount()} % Off</span>
+						</div>
+						
+						<div class="col-md-2">
+						    <span class="ms-3 badge text-bg-warning">&#8377 ${cp.getProduct_price() - cp.getProduct_original_price()} Saved</span>
+						</div>
+						
+						<div class="col-md-2">
+							<a href="/deleteFromCart?product_id=${cp.getProduct_id()}" class="btn"><i class="fa-solid fa-trash text-danger"></i></a>
 						</div>
 						
 						</div>

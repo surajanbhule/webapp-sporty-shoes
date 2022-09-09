@@ -386,7 +386,8 @@ public class MainContrpller {
 		User user = userRepository.findByUsernameAndPassword(username, password);
 
 		if (user == null) {
-
+			session.setAttribute("messege", "Wrong Credentials, Try Again");
+			session.setAttribute("msg_type","danger");
 		} else if (user.getUser_type().equals("normal")) {
 			session.setAttribute("current-user", user);
 			return "redirect:/";
@@ -396,7 +397,8 @@ public class MainContrpller {
 			return "redirect:admin";
 
 		} else {
-
+			session.setAttribute("messege", "Wrong Credentials, Try Again");
+			session.setAttribute("msg_type","danger");
 		}
 
 		return "login";
