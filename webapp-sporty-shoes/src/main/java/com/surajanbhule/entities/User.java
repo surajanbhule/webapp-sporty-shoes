@@ -1,11 +1,15 @@
 package com.surajanbhule.entities;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -32,16 +36,14 @@ public class User {
 	@JoinColumn(name="cart_id")
 	private Cart cart;
 	
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
+	private List<Order> orders;
+	
 	public User() {}
-
-	
-
-	
-
 
 
 	public User(long user_id, String username, String password, String first_name, String last_name, String user_email,
-			String user_phone, String user_type, Address address, Cart cart) {
+			String user_phone, String user_type, Address address, Cart cart, List<Order> orders) {
 		super();
 		this.user_id = user_id;
 		this.username = username;
@@ -53,12 +55,8 @@ public class User {
 		this.user_type = user_type;
 		this.address = address;
 		this.cart = cart;
+		this.orders = orders;
 	}
-
-
-
-
-
 
 
 	public long getUser_id() {
@@ -143,19 +141,19 @@ public class User {
 	}
 
 
-
-
-
-
-
 	public void setCart(Cart cart) {
 		this.cart = cart;
 	}
 
 
+	public List<Order> getOrders() {
+		return orders;
+	}
 
 
-
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
+	}
 
 
 	@Override

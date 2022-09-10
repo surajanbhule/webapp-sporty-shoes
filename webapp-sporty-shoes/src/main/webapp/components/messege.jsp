@@ -12,7 +12,7 @@ else
 	
 %>
 
-<div class="alert alert-<%=alert_type%> alert-dismissible fade <%= status %>" role="alert">
+<div class="alert alert-<%=alert_type%> mt-2  alert-dismissible fade <%= status %>" role="alert">
   <h3 class="text-center"><%= messege %></h3>
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>

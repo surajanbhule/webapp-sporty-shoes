@@ -40,9 +40,13 @@
 <body>
 	<%@include file="/components/navbar.jsp"%>
 
+    
+		
+		
 	<div class="container-fluid">
 
-
+		<%@include file="/components/messege.jsp"%>
+		
 		<div class="row mt-4">
 			<!-- Categories -->
 			<div class="col-md-2 mt-4">
@@ -213,9 +217,11 @@
 
 				</div>
 			<div class="modal-footer">
+			       
+			        
 			
-					<button type="button" class="btn btn-success"
-						data-bs-toggle="modal" data-bs-target="#checkoutModal">Place Order</button>
+					<a href="/checkout?amount=<%= Math.round(totalamount)  %>" class="btn btn-success" 
+						>Place Order</a>
 			         
 					<button type="button" class="btn btn-danger"
 						data-bs-dismiss="modal">Close</button>

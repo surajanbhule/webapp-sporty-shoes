@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -27,16 +28,18 @@ import org.springframework.web.multipart.MultipartFile;
 import com.surajanbhule.Helper;
 import com.surajanbhule.entities.Cart;
 import com.surajanbhule.entities.Category;
+import com.surajanbhule.entities.Order;
 import com.surajanbhule.entities.Product;
 import com.surajanbhule.entities.User;
 import com.surajanbhule.repositories.CartRepository;
 import com.surajanbhule.repositories.CategoryRepository;
+import com.surajanbhule.repositories.OrderRepository;
 import com.surajanbhule.repositories.ProductRepository;
 import com.surajanbhule.repositories.UserRepository;
 
 @Controller
 @MultipartConfig
-public class MainContrpller {
+public class MainController {
 
 	@Autowired
 	private UserRepository userRepository;
@@ -49,6 +52,9 @@ public class MainContrpller {
 	
 	@Autowired
 	private CartRepository cartRepository;
+	
+	@Autowired
+	private OrderRepository orderRepository;
 
 	@RequestMapping("/")
 	public String home(HttpServletRequest request,Model model) {
@@ -227,6 +233,54 @@ public class MainContrpller {
 		
 		return "redirect:/";
 	}
+	
+	
+	@RequestMapping(path = "/checkout")
+	public String doCheckout(HttpServletRequest request) {
+		HttpSession session=request.getSession();
+		User user= (User)session.getAttribute("current-user"); 
+		double amount=Double.parseDouble(request.getParameter("amount"));
+		try {
+		
+			Cart cart=user.getCart();
+			List<Product> productlist=cart.getCart_products_list();
+			
+			long millis=System.currentTimeMillis();
+			Date date=new Date(millis);
+			
+			Order order= new Order();
+			order.setUser(user);
+			order.setOrder_date(date);
+			order.setOrder_status("Placed");
+			order.setTotal_amount(amount);
+			
+			Order savedOrder = orderRepository.save(order);
+			
+			if(savedOrder!=null) {
+				boolean removeAll = productlist.removeAll(productlist);
+				String msg= removeAll?"Removed All Products From Cart":"Unable To Remove";
+				System.out.println(msg);
+				cart.setCart_products_list(productlist);
+				cartRepository.save(cart);
+				
+			}
+			
+			session.setAttribute("messege", "Your Order Is Placed Succssfully, You Will Received It Shortly");
+			session.setAttribute("msg_type", "primary");
+		
+			
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+			session.setAttribute("messege", "Unable To Place Order, Try Later");
+			session.setAttribute("msg_type", "danger");
+		}
+		
+		
+		return "redirect:/";
+	}
+	
 	
 	
 	@RequestMapping(path = "/addProduct")
