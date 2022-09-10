@@ -57,7 +57,7 @@ public class MainController {
 	@Autowired
 	private OrderRepository orderRepository;
 
-	@RequestMapping(path="/",method = RequestMethod.POST)
+	@RequestMapping(path="/")
 	public String home(HttpServletRequest request,Model model) {
 		String catid=request.getParameter("catid");
 		
@@ -109,6 +109,39 @@ public class MainController {
 		return "index";
 	}
 
+	@PostMapping("/changeAdminPassword")
+	public String changePassword(@Param("current_password_name")String current_password_name,
+			@Param("new_password_name")String new_password_name
+			,HttpServletRequest request, Model model) {
+		
+		HttpSession session=request.getSession();
+		User user=(User)session.getAttribute("current-user");
+		
+		if(current_password_name.equals(new_password_name)) {
+			session.setAttribute("messege", "New Password Can't Be Same");
+			session.setAttribute("msg_type", "danger");
+			return "redirect:/admin";
+		}
+		else {
+			
+			if(current_password_name.equals(user.getPassword())) {
+				user.setPassword(new_password_name);
+				userRepository.save(user);
+				session.setAttribute("messege", "Password Change Successfully");
+				session.setAttribute("msg_type", "success");
+			}
+			else {
+				session.setAttribute("messege", "Please enter correct password");
+				session.setAttribute("msg_type", "danger");
+			}
+		
+		}
+		
+		
+		return "redirect:/admin";
+	}
+	
+	
 	@RequestMapping(path = "/admin")
 	public String admin(HttpServletRequest request, Model model) {
 		

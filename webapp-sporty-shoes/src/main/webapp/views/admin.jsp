@@ -41,9 +41,41 @@ if (admin_user.getUser_type().equals("normal")) {
 <body>
 	<%@include file="/components/navbar.jsp"%>
 
-	<div class="container admin mt-4">
+	<div class="container admin mt-1">
 		<%@include file="/components/messege.jsp"%>
-		<div class="row mt-3">
+		
+		<div class="row mt-1">
+		
+		<!-- Col 1 Sales Details -->
+			<div class="col-md-8">
+			</div>
+			<!-- Col 2 Change Password -->
+			<div class="col-md-4">
+
+				<div class="card shadow-lg mb-5 bg-body rounded mt-2"
+					data-bs-toggle="modal" data-bs-target="#changePasswordModal">
+
+
+					<div class="container text-center">
+						
+						<h4 class="text-black">
+							<i class="fa-solid fa-key me-1"></i>Change Password
+						</h4>
+
+
+
+					</div>
+
+
+				</div>
+
+
+
+			</div>
+		
+		</div>
+		
+		<div class="row mt-1">
 
 			<!-- Col 1 Users -->
 			<div class="col-md-3">
@@ -533,6 +565,61 @@ if (admin_user.getUser_type().equals("normal")) {
 	</div>
 	<!-- End Order List Model -->
 	
+	<!-- Start Change Password Model -->
+
+
+
+
+	<!-- Modal -->
+	<div class="modal form-border" id="changePasswordModal" tabindex="-1"
+		aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header form-head">
+
+					<div class="container text-center">
+						<h5 class="modal-title text-black">Change Password</h5>
+					</div>
+
+
+				</div>
+				<div class="modal-body">
+
+					<form action="/changeAdminPassword" method="post">
+						<input type="text" class="form-control mt-2"
+							id="currentInput" placeholder="Enter Current Password"
+							name="current_password_name"> 
+							
+							<input type="text" class="form-control mt-2"
+							id="newInput" placeholder="Enter New Password"
+							name="new_password_name"> 
+							
+							
+		
+						<div class="container text-center mt-3">
+							<button class="btn btn-outline-success " type="submit">
+								Change Password</button>>
+
+							<button type="button" class="btn btn-outline-danger"
+								data-bs-dismiss="modal">Close</button>
+						</div>
+					</form>
+
+
+				</div>
+
+
+
+
+
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<!-- End Change Password-->
 	
 	
 	

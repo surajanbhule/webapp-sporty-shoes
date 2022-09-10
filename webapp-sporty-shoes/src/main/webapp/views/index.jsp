@@ -198,7 +198,7 @@
 						</div>
 						
 						<div class="col-md-2">
-						    <span class="ms-3">&#8377 ${cp.getProduct_original_price()}</span>
+						    <span class="ms-3">&#8377 ${Math.round(cp.getProduct_original_price())}</span>
 						</div>
 						
 						<div class="col-md-2">
@@ -206,11 +206,11 @@
 						</div>
 						
 						<div class="col-md-2">
-							<span class="badge text-bg-danger"> ${cp.getProduct_discount()} % Off</span>
+							<span>${cp.getProduct_discount()} </span><span class="badge text-bg-danger ms-1">% Off</span>
 						</div>
 						
 						<div class="col-md-2">
-						    <span class="ms-3 badge text-bg-warning">&#8377 ${cp.getProduct_price() - cp.getProduct_original_price()} Saved</span>
+						    <span>&#8377 ${Math.round(cp.getProduct_price() - cp.getProduct_original_price())}</span><span class="ms-3 badge text-bg-primary"> Saved</span>
 						</div>
 						
 						<div class="col-md-2">
