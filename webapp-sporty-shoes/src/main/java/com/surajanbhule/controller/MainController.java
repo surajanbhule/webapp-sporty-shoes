@@ -23,6 +23,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.surajanbhule.Helper;
@@ -56,7 +57,7 @@ public class MainController {
 	@Autowired
 	private OrderRepository orderRepository;
 
-	@RequestMapping("/")
+	@RequestMapping(path="/",method = RequestMethod.POST)
 	public String home(HttpServletRequest request,Model model) {
 		String catid=request.getParameter("catid");
 		
@@ -117,6 +118,8 @@ public class MainController {
 		List<Category> categories= (List<Category>) categoryRepository.findAll();
 		List<User> users= (List<User>) userRepository.findAll();
 		List<Product>products= (List<Product>) productRepository.findAll();
+		List<Order>orders=(List<Order>) orderRepository.findAll();
+		model.addAttribute("orders", orders);
 		model.addAttribute("helper", helper);
 		model.addAttribute("categories",categories);
 		model.addAttribute("users",users);
@@ -167,6 +170,12 @@ public class MainController {
 			return "redirect:/login";
 		}
 		else {
+			
+			if(user.getUser_type().equals("admin")) {
+				session.setAttribute("messege", "Admin Can't Use This");
+				session.setAttribute("msg_type", "warning");
+				return "redirect:/";
+			}
 			
 		System.out.println("Product Id: "+ product_id);
 		System.out.println("User"+user.getFirst_name());
@@ -239,11 +248,18 @@ public class MainController {
 	public String doCheckout(HttpServletRequest request) {
 		HttpSession session=request.getSession();
 		User user= (User)session.getAttribute("current-user"); 
+		Helper helper= new Helper();
 		double amount=Double.parseDouble(request.getParameter("amount"));
 		try {
 		
 			Cart cart=user.getCart();
 			List<Product> productlist=cart.getCart_products_list();
+			
+			if(productlist.isEmpty()) {
+				session.setAttribute("messege", "Cart Is Empty");
+				session.setAttribute("msg_type", "danger");
+				return "redirect:/";
+			}
 			
 			long millis=System.currentTimeMillis();
 			Date date=new Date(millis);

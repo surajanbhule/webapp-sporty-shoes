@@ -29,7 +29,7 @@
                 	   totalamount+=p.getProduct_original_price();
                    %>
                    
-                 
+     
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,10 +38,16 @@
 <%@include file="/components/common-template.jsp"%>
 </head>
 <body>
+
+ <c:if test="${products.isEmpty()}">
+  
+  <h1 class="text-black text-center alert alert-warning">No Products Available At This Moment</h1>
+ 
+ </c:if>
+
 	<%@include file="/components/navbar.jsp"%>
 
-    
-		
+<c:if test="${!products.isEmpty()}">
 		
 	<div class="container-fluid">
 
@@ -91,18 +97,23 @@
 													data-bs-ride="carousel">
 													<div class="carousel-inner">
 														<div class="carousel-item active" data-bs-interval="1000">
-															<img style="max-height: 250px"
+															<img style="max-height: 250px;min-height:250px"
 												src="/img/products/${product.getImage1()}"
 												class="card-img-top" alt="...">
 														</div>
-														<div class="carousel-item" data-bs-interval="2000">
-															<img style="max-height: 250px"
-												src="/img/products/${product.getImage1()}"
+														<div class="carousel-item" data-bs-interval="1000">
+															<img style="max-height: 250px;min-height:250px"
+												src="/img/products/${product.getImage2()}"
 												class="card-img-top" alt="...">
 														</div>
 														<div class="carousel-item">
-															<img style="max-height: 250px"
-												src="/img/products/${product.getImage1()}"
+															<img style="max-height: 250px;min-height:250px"
+												src="/img/products/${product.getImage3()}"
+												class="card-img-top" alt="...">
+														</div>
+														<div class="carousel-item">
+															<img style="max-height: 250px;min-height:250px"
+												src="/img/products/${product.getImage4()}"
 												class="card-img-top" alt="...">
 														</div>
 													</div>
@@ -128,15 +139,15 @@
 
 
 											<h5 class="card-title text-black">${product.getProduct_name()}</h5>
-
+<
 
 											<div class="card-footer text-center">
 												<span class="text-black ms-1"> &#8377
-													${product.getProduct_original_price() }</span> <span
+													${Math.round(product.getProduct_original_price()) }</span> <span
 													class="text-black ms-1">&#8377 <s>
 														${product.getProduct_price() }</s></span> <span
 													class="badge rounded-pill text-bg-success ms-1">
-													${product.getProduct_discount() }%</span>
+													${product.getProduct_discount() }%Off</span>
 													
 												<a href="/addToCart?product_id=${product.getProduct_id()}" class=" btn btn-primary ${
 												  helper.inCart(cart_products_list,product)? "disabled" : ""
@@ -191,7 +202,7 @@
 						</div>
 						
 						<div class="col-md-2">
-							<span><s>&#8377 ${cp.getProduct_price()}</s></span>
+							<span><s>&#8377 ${Math.round(cp.getProduct_price())}</s></span>
 						</div>
 						
 						<div class="col-md-2">
@@ -220,7 +231,7 @@
 			       
 			        
 			
-					<a href="/checkout?amount=<%= Math.round(totalamount)  %>" class="btn btn-success" 
+					<a href="/checkout?amount=<%= Math.round(totalamount)  %>" class="btn btn-success ${helper.isCartEmpty(cart_products_list)? "" : "disabled" }" 
 						>Place Order</a>
 			         
 					<button type="button" class="btn btn-danger"
@@ -259,5 +270,7 @@
 		</div>
 	</div>
 <!-- Checkout Model End -->
+
+ </c:if>
 </body>
 </html>

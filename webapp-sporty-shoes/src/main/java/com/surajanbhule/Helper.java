@@ -24,4 +24,12 @@ public class Helper {
 		
 		return false;
 	}
+	
+	public boolean isCartEmpty(List<Product> pList) {
+		
+		if(pList.isEmpty())
+			return false;
+		else
+			return true;
+	}
 }

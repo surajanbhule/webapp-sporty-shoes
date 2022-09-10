@@ -119,14 +119,14 @@ if (admin_user.getUser_type().equals("normal")) {
 			<!-- Col 4 Orders Details -->
 			<div class="col-md-3">
 
-				<div class="card shadow-lg mb-5 bg-body rounded mt-2">
+				<div class="card shadow-lg mb-5 bg-body rounded mt-2" data-bs-toggle="modal" data-bs-target="#listOrderModal">
 
 
 					<div class="container text-center">
 						<img style="max-width: 125px" src="/img/orders.png"
 							class="img-fluid " alt="...">
 						<h4 class="text-black">
-							ORDERS <span class="badge text-bg-warning mb-3">20</span>
+							ORDERS <span class="badge text-bg-warning mb-3">${orders.size()}</span>
 						</h4>
 
 
@@ -424,7 +424,7 @@ if (admin_user.getUser_type().equals("normal")) {
 	<!-- Modal -->
 	<div class="modal form-border" id="listCategoriesModal" tabindex="-1"
 		aria-hidden="true">
-		<div class="modal-dialog">
+		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header form-head">
 
@@ -473,6 +473,69 @@ if (admin_user.getUser_type().equals("normal")) {
 	<!-- End Category List Model -->
 	
 	
+		<!-- Start Order List Model -->
+	<!-- Modal -->
+	<div class="modal form-border" id="listOrderModal" tabindex="-1"
+		aria-hidden="true">
+		<div class="modal-dialog modal-fullscreen">
+			<div class="modal-content">
+				<div class="modal-header form-head">
+
+					<div class="container text-center">
+						<h5 class="modal-title text-black">LIST OF PRODUCTS</h5>
+					</div>
+
+
+				</div>
+				<div class="modal-body">
+				<input type="text" style="width:400px" class="form-control form-control-sm mb-2" id="myOrderInput" name="myInput" placeholder="Search Here">
+				<table class="table table-hover table-striped">
+						<thead>
+							<tr>
+								<th scope="col">ID</th>
+								<th scope="col">Customer First Name</th>
+								<th scope="col">Customer Last Name</th>
+								<th scope="col">Customer Email</th>
+								<th scope="col">Total Amount</th>
+								<th scope="col">Order Date</th>
+								<th scope="col">Order Status</th>
+							</tr>
+						</thead>
+						<tbody id="tableOrderData">
+
+							<c:forEach items="${orders}" var="order">
+								<tr>
+
+									<td>${order.getOrder_id() }</td>
+									<td>${order.getUser().getFirst_name()}</td>
+									<td>${order.getUser().getLast_name()}</td>
+									<td>${order.getUser().getUser_email()}</td>
+									<td>${order.getTotal_amount()}</td>
+									<td>${order.getOrder_date()}</td>
+									<td>${order.getOrder_status()}</td>
+									
+								</tr>
+							</c:forEach>
+
+
+
+						</tbody>
+					</table>
+				
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger"
+						data-bs-dismiss="modal">Close</button>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	<!-- End Order List Model -->
+	
+	
+	
+	
 	<script type="text/javascript">
               $(document).ready(function(){
 			         $('#myUserInput').on("keyup", function(){
@@ -490,6 +553,17 @@ if (admin_user.getUser_type().equals("normal")) {
 				
 				         var value= $(this).val().toLocaleLowerCase();
 				         $("#tableProductData tr").filter(function(){
+					
+					     $(this).toggle($(this).text().toLocaleLowerCase().indexOf(value)>-1)
+				})
+			})
+		  })
+		  
+		  $(document).ready(function(){
+			         $('#myOrderInput').on("keyup", function(){
+				
+				         var value= $(this).val().toLocaleLowerCase();
+				         $("#tableOrderData tr").filter(function(){
 					
 					     $(this).toggle($(this).text().toLocaleLowerCase().indexOf(value)>-1)
 				})
